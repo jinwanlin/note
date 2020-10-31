@@ -1,0 +1,19 @@
+方法头注释
+@RequestMapping
+value = "/{id}"
+method = RequestMethod.GET
+params = "form"
+
+方法参数
+@PathVariable("id") Long id
+Model uiModel
+@RequestParam(value = "id", required = false) Long id
+@Valid Photo photo
+BindingResult bindingResult
+
+
+发现BindingResult的对象必须与@ModelAttribute声明的对象绑定，这种绑定是由Spring MVC来做，但若他们中间插入别的参数，则无法绑定了，所以Errors/BindingResul类型的参数必须在标注@ModelAttribute 类型的参数次一位置(挨着)，见org.springframework.web.bind.annotation.support.HandlerMethodInvoker源代码。
+
+@RequestMapping(value = "/setAlbumCover/{id}")
+    public void setAlbumCover(
+            @PathVariable("id") Long id,
