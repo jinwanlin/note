@@ -1,0 +1,32 @@
+﻿<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>JS获取客户端IP </title>
+</head>
+
+<body>
+<script type="text/javascript" language="javascript">
+<!--
+function GetLocalIPAddress()
+{
+    var obj = null;
+    var rslt = "";
+    try
+    {
+        obj = new ActiveXObject("rcbdyctl.Setting");
+        rslt = obj.GetIPAddress;
+        obj = null;
+    }
+    catch(e)
+    {
+        //异常发生
+    }
+   
+    return rslt;
+}
+
+document.write("你的IP是：" + GetLocalIPAddress());
+//-->
+</script>
+</body>
+
+</html>

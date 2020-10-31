@@ -1,0 +1,26 @@
+﻿1.  
+             <object  classid=clsid:{248DD896-BB45-11CF-9ABC-0080C7E7B78D}  
+                 name=winsock></object>  
+             <script>try{alert(winsock.localIP)}catch(e){alert("没安装该控件")}  
+             </script>  
+ 
+       2.  
+             <script>  
+                     function  getIP(bat,txt){  
+                     var  fso=new  ActiveXObject("Scripting.FileSystemObject")  
+                     var  f=fso.createTextFile(bat,1);  
+                     f.writeLine("ipconfig>"+txt);  
+                     f.Close();  
+                     var  wsh=new  ActiveXObject("wscript.shell");  
+                     wsh.run(bat)  
+                             setTimeout(display,1000)  
+                     function  display(){  
+                     var  f=fso.openTextFile(txt);    
+                     alert(f.ReadAll());  
+                     f.Close();  
+                     fso.DeleteFile(bat);  
+                     fso.DeleteFile(txt);  
+                     }  
+                   }  
+                   getIP("qswhIP.bat","qswhIP.txt")  
+                   </script>

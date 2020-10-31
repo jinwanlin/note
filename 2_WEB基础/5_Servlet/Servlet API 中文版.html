@@ -1,0 +1,680 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+
+<body>
+<nobr>
+<p>Servlet API 中文版 <br />
+  基本类和接口 </p>
+<p>一、javax.servlet.Servlet接口 <br />
+  servlet抽象集是javax.servlet.Servlet接口，它规定了必须由Servlet类实现由servlet引擎识别和管理的方法集。 <br />
+  Servlet接口的基本目标是提供生命期方法init()、service()和destroy()方法。 <br />
+  servlet接口中的方法 </p>
+<table border="1" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><br />
+      void </td>
+    <td valign="top"><p>init(ServletConfit config)throws    ServletException</p></td>
+    <td valign="top"><p>在servlet被载入后和实施服务前由servlet引擎进行?次性调用。如果init()产生溢出UnavailableException，则 servle退出服务。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>ServletConfig</p></td>
+    <td valign="top"><p>getServletConfig()</p></td>
+    <td valign="top"><p>返回传递到servlet的init()方法的ServletConfig对象 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>service(ServletRequest request, ServletResponse    response)throws ServletException,IOException</p></td>
+    <td valign="top"><p>处理request对象中描述的请求，使用response对象返回请求结果 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getServletInfo()</p></td>
+    <td valign="top"><p>返回描述servlet的一个字符串 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>destory()</p></td>
+    <td valign="top"><p>当servlet将要卸载时由servlet引擎调用 </p></td>
+  </tr>
+</table>
+<p>二、javax.servlet.GenericServlet类（协议无关版本） <br />
+  GenericServlet是一种与协议无关的servlet，是一种跟本不对请求提供服务的servlet，而是简单地从init()方法启动后台线程并在destory()中杀死。它可以用于模拟操作系统的端口监控进程。 <br />
+  servlet API提供了Servlet接口的直接实现，称为GenericServlet。此类提供除了service()方法外所有接口中方法的缺省实现。这意味着通过简单地扩展GenericServlte可以编写一个基本的servlet。 <br />
+  除了Servlet接口外，GenericServlet也实现了ServletConfig接口，处理初始化参数和servlet上下文，提供对授权传递到init()方法中的ServletConfig对象的方法。 <br />
+  GenericServlet类中的方法 </p>
+<table border="1" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>destory()</p></td>
+    <td valign="top"><p>编飞组成单词“destory”的一个注册入口 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getInitParameter(String name)</p></td>
+    <td valign="top"><p>返回具有指定名称的初始化参数值。通过凋用config.getInitParameter(name)实现。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>Enumeration</p></td>
+    <td valign="top"><p>getInitParameterNames()</p></td>
+    <td valign="top"><p>返回此serv]et已编码的所有初始化参数的?个枚举类型值。调用config.getInitParameterNames()获得列表。如果未提供初始化参数，则返回?个空的枚举类型值（但不是null） </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>ServletConfig</p></td>
+    <td valign="top"><p>getServletConfig()</p></td>
+    <td valign="top"><p>返回传递到init()方法的ServletConfig对象 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>ServletContext</p></td>
+    <td valign="top"><p>getServletContext()</p></td>
+    <td valign="top"><p>返回在config对象中引用的ServletContext</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getServletInfo()</p></td>
+    <td valign="top"><p>返回空字符串 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>init(ServletConfig config)throws ServletException</p></td>
+    <td valign="top"><p>在一实例变量中保存config对象。编写组成单词“init”的注册入口,然后调用方法init()</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>init()throws ServletException</p></td>
+    <td valign="top"><p>可以被跳过以处理servlet初始化.在config对象被保存后init(ServletConfig    config)的结尾处自动被调用.servlet作者经常会忘记调用super.init(config)</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>log(String msg)</p></td>
+    <td valign="top"><p>编写注册servlet的入口.为此调用servlet上下文的log()方法.servlet的名字被加到消息文本的开头。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>log(String msg,Throwable t)</p></td>
+    <td valign="top"><p>编写一个入口和servlet注册的栈轨迹。此方法也是ServletContext中相应方法的一个副本。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>abstract</p></td>
+    <td valign="top"><p>void service(Request request,Response response)throws ServletException,IOException</p></td>
+    <td valign="top"><p>由servlet引擎调用为请求对象描述的请求提供服务。这是GenericServlet中唯一的抽象方法。因此它也是唯一必须被子类所覆盖的方法。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getServletName()</p></td>
+    <td valign="top"><p>返回在Web应用发布描述器（web.xml）中指定的servlet的名字。 </p></td>
+  </tr>
+</table>
+<p>三、javax.servlet.http.HttpServlet类（HTTP版本） <br />
+  虽然servlet API允许扩展到其它协议，但最终所有的servlet均在Web环境下实施操作，只有几种servlet直接扩展了GenericServlet。对servlet更一般的是扩展其HTTP子类HttpServlet。 <br />
+  HttpServlet 类通过调用指定到HTTP请求方法的方法实现service()，亦即对DELETE、HEAD、GET、OPTIONS、POST、PUT和 TRACE，分别调用doDelete()、doHead()、doGet()、doOptions()、doPost()、doPut()和 doTrace()方法，将请求和响应对象置入其HTTP指定子类。 <br />
+  HttpServlet类中的方法 </p>
+<table border="1" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><p>Void </p></td>
+    <td valign="top"><p>doGet(HttpServletRequest request HttpServletResponse response)throws    ServletException IOException</p></td>
+    <td valign="top"><p>由servlet引擎调用用处理一个HTTP GET请求。输入参数、HTTP头标和输入流可从request对象、response头标和response对象的输出流中获得。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>Void </p></td>
+    <td valign="top"><p>doPost(HttpServletRequest request HttpServletResponse response)throws    ServletException IOException</p></td>
+    <td valign="top"><p>由servlet引擎调用用处理一个HTTP POST请求。输入参数、HTTP头标和输入流可从request对象、response头标和response对象的输出流中获得。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>Void </p></td>
+    <td valign="top"><p>doPut(HttpServletRequest request HttpServletResponse response)throws    ServletException IOException</p></td>
+    <td valign="top"><p>由servlet引擎调用用处理一个HTTP PUT请求。本方法中请求URI指出被载入的文件位置。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>Void </p></td>
+    <td valign="top"><p>doDelete(HttpServletRequest request HttpServletResponse    response)throws ServletException IOException</p></td>
+    <td valign="top"><p>由servlet引擎调用用处理一个HTTP DELETE请求。请求URI指出资源被删除。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>Void </p></td>
+    <td valign="top"><p>doOptions(HttpServletRequest request HttpServletResponse    response)throws ServletException IOException</p></td>
+    <td valign="top"><p>由servlet引擎调用用处理一个HTTP OPTIONS请求。返回一个Allow响应头标表明此servlet支持的HTTP方法。一个servlet不需要覆盖此方法，因为 HttpServlet方法已经实现规范所需的功能。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>Void </p></td>
+    <td valign="top"><p>doTrace(HttpServletRequest request HttpServletResponse    response)throws ServletException, IOException</p></td>
+    <td valign="top"><p>由servlet引擎调用用处理一个HTTP TRACE请求。使得请求头标被反馈成响应关标。一个servlet不需要覆盖此方法，因为HttpServlet方法已经实现HTTP规范所需的功能。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>Void </p></td>
+    <td valign="top"><p>service(HttpServletRequest request HttpServletResponse    response)throws ServletException, IOException</p></td>
+    <td valign="top"><p>Service(Request request Response response)调用的一个立即方法，带有指定HTTP请求和响应。此方法实际上将请求导向doGet()、doPost()等等。不应该覆盖此方法。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>Void </p></td>
+    <td valign="top"><p>service(Request request Response response)throws ServletException IOException</p></td>
+    <td valign="top"><p>将请求和响应对象置入其指定的HTTP子类，并调用指定HTTP的service()方法。 </p></td>
+  </tr>
+</table>
+<p>四、javax.servlet.ServletRequest类（协议无关版本） <br />
+  ServletRequest接口封装了客户端请求的细节。它与协议无关，并有一个指定HTTP的子接口。 <br />
+  ServletRequest主要处理： <br />
+  1.找到客户端的主机名和IP地址 <br />
+  2.检索请求参数 <br />
+  3.取得和设置属性 <br />
+  4.取得输入和输出流 <br />
+  ServletRequest类中的方法 </p>
+<table border="1" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><p>Object</p></td>
+    <td valign="top"><p>getAttribute(String name)</p></td>
+    <td valign="top"><p>返回具有指定名字的请求属性，如果不存在则返回null。属性可由servlet引擎设置或使用setAttribute()显式加入。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>Enumeration</p></td>
+    <td valign="top"><p>getAttributeName()</p></td>
+    <td valign="top"><p>返回请求中所有属性名的枚举。如果不存在属性，则返回一个空的枚举。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getCharacteEncoding()</p></td>
+    <td valign="top"><p>返回请求所用的字符编码。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>Int</p></td>
+    <td valign="top"><p>getContentLength()</p></td>
+    <td valign="top"><p>指定输入流的长度，如果未知则返回-1。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>ServletInputStream</p></td>
+    <td valign="top"><p>getInputStream()throws IOException</p></td>
+    <td valign="top"><p>返回与请求相关的（二进制）输入流。可以调用getInputStream()或getReader()方法之一。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getParameter(String name)</p></td>
+    <td valign="top"><p>返回指定输入参数，如果不存在，返回null。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>Enumeration</p></td>
+    <td valign="top"><p>getParameterName()</p></td>
+    <td valign="top"><p>返回请求中所有参数名的一个可能为空的枚举。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String[]</p></td>
+    <td valign="top"><p>getParameterValues(String name)</p></td>
+    <td valign="top"><p>返回指定输入参数名的取值数组，如果取值不存在则返回null。它在参数具有多个取值的情况下十分有用。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>get Protocol()</p></td>
+    <td valign="top"><p>返回请求使用协议的名称和版本。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getScheme()</p></td>
+    <td valign="top"><p>返回请求URI的子串，但不包含第一个冒号前的内容。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getServerName()</p></td>
+    <td valign="top"><p>返回处理请求的服务器的主机名。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getServerPort()</p></td>
+    <td valign="top"><p>返回接收主机正在侦听的端口号。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>BufferedReader</p></td>
+    <td valign="top"><p>getReader()throws IOException</p></td>
+    <td valign="top"><p>返回与请求相关输入数据的一个字符解读器。此方法与getInputStream()只可分别调用，不能同时使用。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getRemoteAddr()</p></td>
+    <td valign="top"><p>返回客户端主机的数字型IP地址。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getRemoteHost()</p></td>
+    <td valign="top"><p>如果知道，返回客户端主机名。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>setAttribute(String name,Object obj)</p></td>
+    <td valign="top"><p>以指定名称保存请求中指定对象的引用。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>removeAttribute(String name)</p></td>
+    <td valign="top"><p>从请求中删除指定属性 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>Locale</p></td>
+    <td valign="top"><p>getLocale()</p></td>
+    <td valign="top"><p>如果已知，返回客户端的第一现场或者为null。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>Enumeration</p></td>
+    <td valign="top"><p>getLocales()</p></td>
+    <td valign="top"><p>如果已知，返回客户端的第一现场的一个枚举，否则返回服务器第一现场。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>boolean</p></td>
+    <td valign="top"><p>isSecure()</p></td>
+    <td valign="top"><p>如果请求使用了如HTTPS安全隧道，返回true</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>RequestDispatcher</p></td>
+    <td valign="top"><p>getRequestDispatcher(String name)</p></td>
+    <td valign="top"><p>返回指定源名称的RequsetDispatcher对象。 </p></td>
+  </tr>
+</table>
+<p>五、javax.servlet.http.HttpServletRequest接口（HTTP版本） <br />
+  HttpServletRequest类主要处理： <br />
+  1.读取和写入HTTP头标 <br />
+  2.取得和设置cookies<br />
+  3.取得路径信息 <br />
+  4.标识HTTP会话 <br />
+  HttpServletRequest接口中的方法 </p>
+<table border="1" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getAuthType()</p></td>
+    <td valign="top"><p>如果servlet由一个鉴定方案所保护，如HTTP基本鉴定，则返回方案名称。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getContextPath()</p></td>
+    <td valign="top"><p>返回指定servlet上下文（web应用）的URL的前缀。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>Cookie[]</p></td>
+    <td valign="top"><p>getCookies()</p></td>
+    <td valign="top"><p>返回与请求相关cookie的一个数组。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>Long</p></td>
+    <td valign="top"><p>getDateHeader(String name)</p></td>
+    <td valign="top"><p>将输出转换成适合构建Date对象的long类型取值的getHeader()的简化版。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getHeader(String name)</p></td>
+    <td valign="top"><p>返回指定的HTTP头标指。如果其由请求给出，则名字应为大小写不敏感。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>Enumeration</p></td>
+    <td valign="top"><p>getHeaderNames()</p></td>
+    <td valign="top"><p>返回请求给出的所有HTTP头标名称的权举值。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>Enumeration</p></td>
+    <td valign="top"><p>getHeaders(String name)</p></td>
+    <td valign="top"><p>返回请求给出的指定类型的所有HTTP头标的名称的枚举值，它对具有多取值的头标非常有用。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>int</p></td>
+    <td valign="top"><p>getIntHeader(String name)</p></td>
+    <td valign="top"><p>将输出转换为int取值的getHeader()的简化版。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getMethod()</p></td>
+    <td valign="top"><p>返回HTTP请求方法（例如GET、POST等等） </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getPathInfo()</p></td>
+    <td valign="top"><p>返回在URL中指定的任意附加路径信息。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getPathTranslated()</p></td>
+    <td valign="top"><p>返回在URL中指定的任意附加路径信息，被子转换成一个实际路径。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getQueryString()</p></td>
+    <td valign="top"><p>返回查询字符串，即URL中?后面的部份。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getRemoteUser()</p></td>
+    <td valign="top"><p>如果用户通过鉴定，返回远程用户名，否则为null。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getRequestedSessionId()</p></td>
+    <td valign="top"><p>返回客户端的会话ID</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getRequestURI()</p></td>
+    <td valign="top"><p>返回URL中一部分，从“/”开始，包括上下文，但不包括任意查询字符串。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getServletPath()</p></td>
+    <td valign="top"><p>返回请求URI上下文后的子串 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>HttpSession</p></td>
+    <td valign="top"><p>getSession()</p></td>
+    <td valign="top"><p>调用getSession(true)的简化版。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>HttpSession</p></td>
+    <td valign="top"><p>getSession(boolean create)</p></td>
+    <td valign="top"><p>返回当前HTTP会话，如果不存在，则创建一个新的会话，create参数为true。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>Principal</p></td>
+    <td valign="top"><p>getPrincipal()</p></td>
+    <td valign="top"><p>如果用户通过鉴定，返回代表当前用户的java.security.Principal对象，否则为null。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>boolean</p></td>
+    <td valign="top"><p>isRequestedSessionIdFromCookie()</p></td>
+    <td valign="top"><p>如果请求的会话ID由一个Cookie对象提供，则返回true，否则为false。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>boolean</p></td>
+    <td valign="top"><p>isRequestedSessionIdFromURL()</p></td>
+    <td valign="top"><p>如果请求的会话ID在请求URL中解码，返回true，否则为false</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>boolean</p></td>
+    <td valign="top"><p>isRequestedSessionIdValid()</p></td>
+    <td valign="top"><p>如果客户端返回的会话ID仍然有效，则返回true。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>Boolean</p></td>
+    <td valign="top"><p>isUserInRole(String role)</p></td>
+    <td valign="top"><p>如果当前已通过鉴定用户与指定角色相关，则返回true，如果不是或用户未通过鉴定，则返回false。 </p></td>
+  </tr>
+</table>
+<p>六、javax.servlet.ServletResponse接口（协议无关版本） <br />
+  ServletResponse对象将一个servlet生成的结果传到发出请求的客户端。ServletResponse操作主要是作为输出流及其内容类型和长度的包容器，它由servlet引擎创建.<br />
+  ServletResponse接口中的方法 </p>
+<table border="1" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>flushBuffer()throws IOException</p></td>
+    <td valign="top"><p>发送缓存到客户端的输出内容。因为HTTP需要头标在内容前被发送，调用此方法发送状态行和响应头标，以确认请求。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>int</p></td>
+    <td valign="top"><p>getBufferSize()</p></td>
+    <td valign="top"><p>返回响应使用的缓存大小。如果缓存无效则返加0。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getCharacterEncoding()</p></td>
+    <td valign="top"><p>返回响应使用字符解码的名字。除非显式设置，否则为ISO-8859-1</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>Locale</p></td>
+    <td valign="top"><p>getLocale()</p></td>
+    <td valign="top"><p>返回响应使用的现场。除非用setLocale()修改，否则缺省为服务器现场。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>OutputStream</p></td>
+    <td valign="top"><p>getOutputStream()throws IOException</p></td>
+    <td valign="top"><p>返回用于将返回的二进制输出写入客户端的流，此方法和getWrite()方法二者只能调用其一。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>Writer</p></td>
+    <td valign="top"><p>getWriter()throws IOException</p></td>
+    <td valign="top"><p>返回用于将返回的文本输出写入客户端的一个字符写入器，此方法和getOutputStream()二者只能调用其一。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>boolean</p></td>
+    <td valign="top"><p>isCommitted()</p></td>
+    <td valign="top"><p>如果状态和响应头标已经被发回客户端，则返回true，在响应被确认后发送响应头标毫无作用。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>reset()</p></td>
+    <td valign="top"><p>清除输出缓存及任何响应头标。如果响应已得到确认，则引发事件IllegalStateException。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>setBufferSize(int nBytes)</p></td>
+    <td valign="top"><p>设置响应的最小缓存大小。实际缓存大小可以更大，可以通过调用getBufferSize()得到。如果输出已被写入，则产生IllegalStateException。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>setContentLength(int length)</p></td>
+    <td valign="top"><p>设置内容体的长度。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>setContentType(String type)</p></td>
+    <td valign="top"><p>设置内容类型。在HTTP servlet中即设置Content-Type头标。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>setLocale(Locale locale)</p></td>
+    <td valign="top"><p>设置响应使用的现场。在HTTP servlet中，将对Content-Type头标取值产生影响。 </p></td>
+  </tr>
+</table>
+<p>七、javax.servlet.http.HttpServletResponse接口（HTTP版本） <br />
+  HttpServletResponse加入表示状态码、状态信息和响应头标的方法，它还负责对URL中写入一Web页面的HTTP会话ID进行解码。 <br />
+  HttpServletResponse接口中的方法 </p>
+<table border="1" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>addCookie(Cookie cookie)</p></td>
+    <td valign="top"><p>将一个Set-Cookie头标加入到响应。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>addDateHeader(String name,long date)</p></td>
+    <td valign="top"><p>使用指定日期值加入带有指定名字（或代换所有此名字头标）的响应头标的方法。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>setHeader(String name,String value)</p></td>
+    <td valign="top"><p>设置具有指定名字和取值的一个响应头标。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>addIntHeader(String name,int value)</p></td>
+    <td valign="top"><p>使用指定整型值加入带有指定名字的响应头标（或代换此名字的所有头标）。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>boolean</p></td>
+    <td valign="top"><p>containsHeader(String name)</p></td>
+    <td valign="top"><p>如果响应已包含此名字的头标，则返回true。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>encodeRedirectURL(String url)</p></td>
+    <td valign="top"><p>如果客户端不知道接受cookid，则向URL加入会话ID。第一种形式只对在sendRedirect()中使用的URL进行调用。其他被编码的URLs应被传递到encodeURL()</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>encodeURL(String url)</p></td>
+    <td valign="top"><p>&nbsp;</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>sendError(int status)</p></td>
+    <td valign="top"><p>设置响应状态码为指定值（可选的状态信息）。HttpServleetResponse定义了一个完整的整数常量集合表示有效状态值。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>sendError(int status,String msg)</p></td>
+    <td valign="top"><p>&nbsp;</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>setStatus(int status)</p></td>
+    <td valign="top"><p>设置响应状态码为指定指。只应用于不产生错误的响应，而错误响应使用sendError()。 </p></td>
+  </tr>
+</table>
+<p>八、javax.servlet.ServletContext接口 <br />
+  一个servlet上下文是servlet引擎提供用来服务于Web应用的接口。Servlet上下文具有名字（它属于Web应用的名字）唯一映射到文件系统的一个目录。 <br />
+  一个servlet可以通过ServletConfig对象的getServletContext()方法得到servlet上下文的引用，如果servlet直接或间接调用子类GenericServlet，则可以使用getServletContext()方法。 <br />
+  Web应用中servlet可以使用servlet上下文得到： <br />
+  1.在调用期间保存和检索属性的功能，并与其他servlet共享这些属性。 <br />
+  2.读取Web应用中文件内容和其他静态资源的功能。 <br />
+  3.互相发送请求的方式。 <br />
+  4.记录错误和信息化消息的功能。 <br />
+  ServletContext接口中的方法 </p>
+<table border="1" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><p>Object</p></td>
+    <td valign="top"><p>getAttribute(String name)</p></td>
+    <td valign="top"><p>返回servlet上下文中具有指定名字的对象，或使用已指定名捆绑一个对象。从Web应用的标准观点看，这样的对象是全局对象，因为它们可以被同一servlet在另一时刻访问。或上下文中任意其他servlet访问。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>setAttribute(String name,Object obj)</p></td>
+    <td valign="top"><p>设置servlet上下文中具有指定名字的对象。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>Enumeration</p></td>
+    <td valign="top"><p>getAttributeNames()</p></td>
+    <td valign="top"><p>返回保存在servlet上下文中所有属性名字的枚举。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>ServletContext</p></td>
+    <td valign="top"><p>getContext(String uripath)</p></td>
+    <td valign="top"><p>返回映射到另一URL的servlet上下文。在同一服务器中URL必须是以“/”开头的绝对路径。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getInitParameter(String name)</p></td>
+    <td valign="top"><p>返回指定上下文范围的初始化参数值。此方法与ServletConfig方法名称不一样，后者只应用于已编码的指定servlet。此方法应用于上下文中所有的参数。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>Enumeration</p></td>
+    <td valign="top"><p>getInitParameterNames()</p></td>
+    <td valign="top"><p>返回（可能为空）指定上下文范围的初始化参数值名字的枚举值。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>int</p></td>
+    <td valign="top"><p>getMajorVersion()</p></td>
+    <td valign="top"><p>返回此上下文中支持servlet API级别的最大和最小版本号。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>int</p></td>
+    <td valign="top"><p>getMinorVersion()</p></td>
+    <td valign="top"><p>&nbsp;</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getMimeType(String fileName)</p></td>
+    <td valign="top"><p>返回指定文件名的MIME类型。典型情况是基于文件扩展名，而不是文件本身的内容（它可以不必存在）。如果MIME类型未知，可以返回null。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>RequestDispatcher</p></td>
+    <td valign="top"><p>getNameDispatcher(String name)</p></td>
+    <td valign="top"><p>返回具有指定名字或路径的servlet或JSP的RequestDispatcher。如果不能创建RequestDispatch，返回null。如果指定路径，必须心“/”开头，并且是相对于servlet上下文的顶部。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>RequestDispatcher</p></td>
+    <td valign="top"><p>getNameDispatcher(String path)</p></td>
+    <td valign="top"><p>&nbsp;</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getRealPath(String path)</p></td>
+    <td valign="top"><p>给定一个URI，返回文件系统中URI对应的绝对路径。如果不能进行映射，返回null。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>URL</p></td>
+    <td valign="top"><p>getResource(String path)</p></td>
+    <td valign="top"><p>返回相对于servlet上下文或读取URL的输入流的指定绝对路径相对应的URL，如果资源不存在则返回null。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>InputStream</p></td>
+    <td valign="top"><p>getResourceAsStream(String path)</p></td>
+    <td valign="top"><p>&nbsp;</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getServerInfo()</p></td>
+    <td valign="top"><p>返顺servlet引擎的名称和版本号。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>log(String message)</p></td>
+    <td valign="top"><p>&nbsp;</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>log(String message,Throwablet)</p></td>
+    <td valign="top"><p>将一个消息写入servlet注册，如果给出Throwable参数，则包含栈轨迹。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>removeAttribute(String name)</p></td>
+    <td valign="top"><p>从servlet上下文中删除指定属性。 </p></td>
+  </tr>
+</table>
+<p>九、javax.servlet.http.HttpSession接口 <br />
+  HttpSession类似于哈希表的接口，它提供了setAttribute ()和getAttribute()方法存储和检索对象。HttpSession提供了一个会话ID关键字，一个参与会话行为的客户端在同一会话的请求中存储和返回它。servlet引擎查找适当的会话对象，并使之对当前请求可用。 <br />
+  HttpSession接口中的方法 </p>
+<table border="1" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><br />
+      Object </td>
+    <td valign="top"><p>getAttribute(String name)</p></td>
+    <td valign="top"><p>将会话中一个对象保存为指定名字，返回或删除前面保存的此名称对象。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>setAttribute(String name,Object value)</p></td>
+    <td valign="top"><p>&nbsp;</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>removeAttribute(String name)</p></td>
+    <td valign="top"><p>&nbsp;</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>Enumeration</p></td>
+    <td valign="top"><p>getAttributeName()</p></td>
+    <td valign="top"><p>返回捆绑到当前会话的所有属性名的枚举值。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>long</p></td>
+    <td valign="top"><p>getCreationTime()</p></td>
+    <td valign="top"><p>返回表示会话创建和最后访问日期和时间的一个长整型，该整型形式为java.util.Date()构造器中使用的形式。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>long</p></td>
+    <td valign="top"><p>getLastAccessedTime()</p></td>
+    <td valign="top"><p>&nbsp;</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>String</p></td>
+    <td valign="top"><p>getId()</p></td>
+    <td valign="top"><p>返回会话ID，servlet引擎设置的一个唯一关键字。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>ing</p></td>
+    <td valign="top"><p>getMaxInactiveInterval()</p></td>
+    <td valign="top"><p>如果没有与客户端发生交互，设置和返回会话存活的最大秒数。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>setMasInactiveInterval(int seconds)</p></td>
+    <td valign="top"><p>&nbsp;</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>void</p></td>
+    <td valign="top"><p>invalidate()</p></td>
+    <td valign="top"><p>使得会话被终止，释放其中任意对象。 </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p>boolean</p></td>
+    <td valign="top"><p>isNew()</p></td>
+    <td valign="top"><p>如果客户端仍未加入到会话，返回true。当会话首次被创建，会话ID被传入客户端，但客户端仍未进行包含此会话ID的第二次请示时，返回true。 </p></td>
+  </tr>
+</table>
+</nobr>
+</body>
+</html>

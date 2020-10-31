@@ -1,0 +1,238 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<title>倒计时</title>
+
+<script type="text/javascript" src="jquery-1.11.2.min.js"></script>
+<script type="text/javascript">
+
+$(function(){
+	$(".jisuan tr").each(function(){
+		var tds = $(this).children();
+		getDays(new Date($(tds[1]).html()), new Date(), tds[2]);
+  });
+  
+  xinyongka();
+
+  getContent(1);
+})
+
+
+
+function getDays(smallDate, bigDate, node){
+	var seconds = Math.floor((bigDate.getTime() - smallDate.getTime()) / 1000);
+	var minutes = Math.floor(seconds / 60);
+	var hours = Math.floor(minutes / 60);
+	var days = Math.floor(hours / 24);
+	if(-15 < days && days <= 0){
+		$(node).html(days);
+	}
+}
+
+function xinyongka(){
+	
+	var date = (new Date()).getDate();
+	var month = (new Date()).getMonth()+1;
+//	alert(date);
+	
+	$(".xinyongka tbody tr").each(function(){		
+		var tds = $(this).children();
+		var skipMonth = $(this).attr("skipMonth");
+		d = $(tds[2]).html();
+		dd = d.substring(0, d.length-1);
+		ddd = parseInt(parseInt(dd) - date);
+
+
+		if(0<ddd && ddd<7 && month>skipMonth){
+			$(tds[2]).append(("<h2>离还款日还有"+ddd+"天</h2>"));
+		}
+	});
+}
+
+// url: "http://182.92.228.78:8080/study/app/note/show",
+//http://hadoop-xj122:18567/cdc-manager/equipment/show/json?id=8021539b9072463892f5098449031cea&time=1467951490301
+//http://localhost:8080/study/app/note/show
+function getContent(page){
+	$.ajax({
+	   dataType: "json",
+	   url: "http://182.92.228.78:8080/study/app/note/show",
+       data : {
+			page : page,
+			time : new Date().getTime()
+		},
+	   success: function(data){
+		   	console.info(data)
+	   }
+});
+
+
+}
+
+
+</script>
+<style>
+.hide{
+	display:none;
+}
+table{
+	border-collapse: collapse;
+	border:1px;
+}
+
+.todo{
+	position: absolute;
+	margin: auto;
+	top: 100px;
+	left:45%
+}
+
+ul li{
+	list-style-type: decimal;
+}
+
+.jisuan td:last-child{
+	color:red;
+	font-size:28px;
+}
+</style>
+	</head>
+
+
+
+
+	<body>
+		<table class="jisuan" border="1">
+			<tr class="hide">
+				<td>ZK(2011-10-22)</td>
+				<td></td>
+				<td id="zikao"></td>
+			</tr>
+			<tr class="hide">
+				<td>回家(2012-01-25)</td>
+				<td></td>
+				<td id="goHome"></td>
+			</tr>
+			<tr class="hide">
+				<td>together</td>
+				<td>2011-04-03</td>
+				<td id="together"></td>
+			</tr>
+			<tr class="hide">
+				<td>marrage</td>
+				<td>2012-02-02</td>
+				<td id="GetMarried"></td>
+			</tr>
+			<tr class="hide">
+				<td>初一(2011-02-10)</td>
+				<td></td>
+				<td id="cuyi"></td>
+			</tr>
+			<tr>
+				<td>喜儿</td>
+				<td>2014-12-07</td>
+				<td id="jinxi"></td>
+			</tr>
+		</table>
+<br /><br />
+
+		<table class="jisuan" border="1">
+			<tr>
+				<td>6-5</td>
+				<td>2015-06-05</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>罗庆阳</td>
+				<td>2015-06-14</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>mom</td>
+				<td>2015-06-27</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Jin</td>
+				<td>2015-07-01</td>
+				<td></td>
+			</tr>
+			<tr class="">
+				<td>罗婷</td>
+				<td>2015-07-08</td>
+				<td></td>
+			</tr>
+			<tr class="">
+				<td>罗刚</td>
+				<td>2015-07-29</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>妮儿</td>
+				<td>2015-08-05</td>
+				<td></td>
+			</tr>
+			<tr class="">
+				<td>欧军</td>
+				<td>2015-09-04</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>姐姐/乾妈</td>
+				<td>2015-09-11</td>
+				<td></td>
+			</tr>
+		</table>
+<br /><br />
+		
+		<table border="1" class="xinyongka">
+			<thead>
+			<tr>
+				<th>信用卡</th>
+				<th>出账日</th>
+				<th>最后还款日</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr skipMonth="5">
+				<td>花呗</td>
+				<td></td>
+				<td>10号</td>
+			</tr>
+			<tr skipMonth="7">
+				<td>北京银行</td>
+				<td>8号</td>
+				<td>28号</td>
+			</tr>
+			<tr skipMonth="7">
+				<td>招商银行</td>
+				<td>7号</td>
+				<td>25号</td>
+			</tr>
+			<tr skipMonth="7">
+				<td>广发银行</td>
+				<td>6号</td>
+				<td>26号</td>
+			</tr>
+		</tbody>
+		</table>
+
+<div class="todo">
+<h2 style="color:#f8f8f8;">今日事今日毕</h2>
+<div id="note">
+
+</div>
+<!-- <ul>
+	<lil>web端配置返回json或html</lil>
+	<li>web端重构三台合一告警, 可上报和下派告警</li>
+
+
+	<li>做动环手机客户端, 工单列表, 工单详细, 地图导航</li>
+	<li>生产环境安装包, 开放系统端口号80,8080,3306; 初始化mysql root 密码</li>
+	<li>拆分scity_web</li>
+	
+</ul> -->
+</div>
+		
+	</body>
+</html>

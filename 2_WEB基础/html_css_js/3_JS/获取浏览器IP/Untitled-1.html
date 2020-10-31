@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+
+        <SCRIPT language=JScript event=OnObjectReady(objObject,objAsyncContext) for=foo>   
+  function GetLocalIPAddr(){ 
+           if(objObject.IPEnabled != null && objObject.IPEnabled != "undefined" && objObject.IPEnabled == true){   
+  
+                if(objObject.MACAddress != null && objObject.MACAddress != "undefined")   
+                    var MACAddr = objObject.MACAddress;   
+		alert(MACAddr);
+ 
+                if(objObject.IPEnabled && objObject.IPAddress(0) != null && objObject.IPAddress(0) != "undefined")   
+                    IPAddr = objObject.IPAddress(0);   
+  
+                if(objObject.DNSHostName != null && objObject.DNSHostName != "undefined")   
+                    sDNSName = objObject.DNSHostName;   
+  
+            }   
+ } 
+         </SCRIPT> 
+
+
+</head>
+
+<body onload="GetLocalIPAddr()">
+<form id="form1" name="form1" method="post" action="">
+  <label>startChart
+    <input type="submit" name="startChart" id="startChart" value="开始聊天" />
+  </label>
+</form>
+</body>
+</html>
