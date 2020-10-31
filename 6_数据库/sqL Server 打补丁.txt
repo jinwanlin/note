@@ -1,0 +1,21 @@
+1.查看端口开放没有
+cmd下
+netstat -a -n 
+或
+netstat -a -n |find "1433"
+netstat -a -n |find "2433"
+ 
+查看下你的2433或1433端口打开了没
+如果是2433打开,那么到企业管理器上修改为1433这个默认端口
+
+2.查看是否打SP4补丁
+
+查询分析器下:
+select   @@version 
+
+结果中有这个
+Microsoft SQL Server  2000 - 8.00.2039 (Intel X86) 
+
+
+说明打好SP4.
+

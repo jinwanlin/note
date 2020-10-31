@@ -1,0 +1,192 @@
+
+
+eclipse平台+插件的方式使eclipse很容易扩充，eclipse插件安装的方式有两种：
+
+　1.一种是内置方式安装，即下载插件后解压缩，然后把解压后插件的plugins和features目录里面的内容分别复制到eclipse安装目录的 plugins和feature目录里面，这种方法安装比较简单，但是问题也比较多，因为所有的插件的文件都混合到了plugins和feature目录里面，eclipse会变得比较臃肿，而且如果你不想再使用某个插件，卸载会是一件非常麻烦的事情。　
+
+　
+
+2.第二种方式就是使用外挂的方法，下面通过eclipse3.2汉化包的安装来说明一下：
+
+1)建立一个D:\eclipse3.2.2\myPlugins目录，这个目录是我们准备存放所有eclipse插件的地方
+
+3)然后建立一个D:\eclipse.2.2\myPlugins\NLPack1-eclipse-SDK-3.2目录，这个目录是我们存放汉化包的地方
+
+4)然后解压eclipse汉化包，NLPack1-eclipse-SDK-3.2.zip，在D:\eclipse3.2.2\myPlugins\NLPack1-eclipse-SDK-3.2目录里面解压缩，解压缩后的内容会在一个名为eclipse目录中
+
+5)建立一个D:\eclipse3.2.2\links目录，新建一个文件language.link(文件名可随意)，文件的内容只有一行，如下： path=D:\\eclipse3.2.2\\myPlugins\\NLPack1-eclipse-SDK-3.2
+
+6)启动eclipse，汉化成功
+
+
+　 tip:其他的插件也可以用这样的方式安装，目录和文件的名字建议保留插件的版本号，这样便于今后对插件进行升级和管理.
+
+
+4.配置SWT Designer6.2.0
+
+SWT Designer6.0 下载后是一个文件名为“Designer_v6.0.0_for_Eclipse3.2.zip”的压缩包。   
+
+
+1)在D:\eclipse3.2.2\myPlugins\目录下建"SWTDesigner_v6.0.0_for_Eclipse3.2"目录   
+
+
+2)再在 "SWTDesigner_v6.0.0_for_Eclipse3.2"下建"eclipse"目录   
+
+
+3)把解压后的文件（features文件夹和plugins文件夹）放到：D:\eclipse3.2.2\myPlugins\SWTDesigner_v6.0.0_for_Eclipse3.2\eclipse目录下   
+
+
+4)返回"D:\eclipse3.2.2"目录，在"links"文件夹下新建SWTDesigner.link文件，用记事本打开,写入:
+
+      path=D:\\eclipse3.2.2\\myPlugins\\SWTDesigner_v6.0.0_for_Eclipse3.2   
+
+
+5)运行eclipse，在 "文件" --> "新建" --> "其他" 中出现Designer节点说明Designer插件安装成功.   
+
+
+6)用注册机注册SWT Designer6.0   
+
+a.打开 "窗口" --> "首选项",在左窗格中选"Designer" --> "License",右窗格中记下"Current License"中的值.    
+
+b.打开注册机keygen.exe，输入"Current License"中的值，得到注册号,再点击"Registration and Activation"，输入注册号,点击"下一步" --> 填写信息 --> "完成"
+
+
+备注：如果插件安装不成功，可在eclipse.exe的桌面快捷方式上右键 --> 属性 --> 目标：
+
+     D:\eclipse3.2.2\eclipse.exe 后加上 -clean。再不成功，估计就是插件版本号和eclipse版本号不对应的原因了。
+
+
+1． 下载：
+
+从Eclipse 的官方网站（www.eclipse.org）下载3.2.1版Eclipse，压缩包名为eclipse-SDK-3.2.1-win32.zip，我下载后解压到D:\eclipse
+
+2． 语言包（安装后可中文化eclipse）下载及安装：
+
+①     下载地址：http://download.eclipse.org/eclipse/downloads/
+
+打开下载地址，在页面最下端可看到下载3.2.1_Language_Packs
+
+②     在D:\eclipse下新建文件夹，命名为”language”（文件名可随意），解压下载的语言包到language目录下
+
+③     在 D:\eclipse 下新建文件夹，命名为 “links”（名称不可随意），新建一文本文件language.link.txt（文件名可随意，扩展名一定是.txt或者.link），内容为：path=language（也可使用绝对路径path=D:\\eclipse\\language或者path=D:/eclipse/language）。
+
+④     此时目录结构如下
+
+D:\eclipse          //eclipse.exe所在目录
+
+D:\eclipse\links 
+
+D:\eclipse\language\eclipse\features 
+
+D:\eclipse\language\eclipse\plugins
+
+⑤     启动eclipse，这时默认启动为中文界面，如果想启动英文eclipse，只要新建一eclipse.exe快捷方式，快捷方式”属性”==>“目标”中输入D:\eclipse\eclipse.exe -nl "en_US" 即可（中文界面可以设置-nl "zh_CN"，繁体中文为-nl "zh_TW"）
+
+3． 安装tomcatPlugin（安装后可在eclipse中直接使用tomcat）插件
+
+①     下载地址：http://www.sysdeo.com/eclipse/tomcatplugin
+
+可以下载最新的3.2 beta2版本，它支持eclipse3.2.1和tomcat6.0
+
+②     在D:\eclipse下新建文件夹，命名为”myplugins”（名称可随意），在”myplugins”下依次新建文件夹”tomcat”、 ”eclipse”、 ” plugins ”、 ” features ”，目录结构如下：
+
+D:\eclipse\myplugins\tomcat\eclipse\features 
+
+D:\eclipse\myplugins\tomcat\eclipse\plugins
+
+把解压后的tomcatPlugin文件夹放在此plugins目录下
+
+③     在 D:\eclipse\links 下新建一文本文件tomcat.link.txt（文件名可随意，扩展名一定是.txt或者.link），内容为：path=myplugins/tomcat（也可使用绝对路径path=D:\\eclipse\\myplugins\\tomcat）。
+
+④     启动eclipse，可在菜单栏看到”Tomcat”选项，此时还需对其进行配置，在”Window” ==>”Preferences”==>”Tomcat”中，选择Tomcat版本Version5.x（我使用的是Tomcat5.5.20，放在D:\Tomcat下，对于Tomcat6.0，可选择Version6.x），并设置Tomcat home；在”Context declaration mode”下有两种选择，一种是configuration file，默认放在D:\Tomcat\conf\server.xm中，一种是Context directory默认放在D:\Tomcat\conf\Catalina\localhost下，可根据需要自由选择(对于Tomcat6.0，Context directory默认放在D:\Tomcat\webapps下)，在这里我选择”Context directory”，并更改为D:\Tomcat\webapps（这里选择哪一种无所谓，因为只是讨论tomcatPlugin的使用~~） 
+
+⑤     在Tomcat菜单下启动tomcat即可
+
+注意：对于eclipse3.2.1+tomcatPlugin3.2beta2，在Tomcat5.5.20和Tomcat6.0下，都可以在eclipse中正常启动tomcat
+
+对于Tomcat5.0.12，在eclipse中启动时Console会报错：
+
+<terminated>Tomcat6.x[Java Application]C:\Java\jdk1.5.0\javaw.exe
+
+很奇怪，报的是Tomcat6.x的错，可能是因为beta版的缘故吧，所以大家最好在apache网站上下载Tomcat5.5以上的版本（顺便说一句，Tomcat6.0支持最新的JSP2.1和Servlet2.5，在后面做了点比较，以供参考）~~
+
+⑥     上面5步是一种比较麻烦的安装，呵呵~最简单的办法，是把解压后的tomcatPlugin文件夹直接放到D:\eclipse\plugins目录下，启动eclipse即可，不过这样安装会导致plugins目录越来越大，以后维护起来也不方便，所以最好采用上面的link方式安装~
+
+
+4． Jadclipse插件（反编译工具）安装
+
+①     下载jad1.5.8g
+
+下载地址：http://www.kpdus.com/jad.html#download
+
+下载后解压。解压缩后将jad.exe拷贝到JDK的bin目录下（放置位置可随意），如C:\Java\jdk1.5.0\bin
+
+jad.exe是java的反编译工具，一些经常使用的反编译工具如DJ Java Decompiler、Cavaj Java Decompiler等反编译引擎都是jad.exe，不过是在jad.exe上加了图形化界面而已
+
+②     下载jadclipse（一个在eclipse中调用jad.exe进行反编译的插件）
+
+下载地址：http://jadclipse.sourceforge.net/ （下载包名为net.sf.jadclipse_3.2.3.jar）
+
+③     和tomcatPlugin一样，安装jadclipse插件有两种方法，一种是直接把jar包放到D:\eclipse\plugins目录下，另一种是采用link方式安装
+
+④     采用link方式安装时需要在”myplugins”下依次新建文件夹”jadclipse”、 ”eclipse”、 ” plugins ”、 ” features ”，此时目录结构如下图：
+
+
+
+把压缩包net.sf.jadclipse_3.2.3.jar放在jadclipse\eclipse\plugins目录下
+
+⑤     在 D:\eclipse\links 下新建一文本文件jadclipse.link.txt（文件名可随意，扩展名一定是.txt或者.link），内容为：path=myplugins/jadclipse（也可使用绝对路径path=D:\\eclipse\\myplugins\\ jadclipse）
+
+⑥     启动eclipse，在”Window” ==>”Preferences”==>”Java”中可在看到多处一个”JadClipse”选项，设置path to decompiler为jad.exe的全路径（否则会出错java.io.IOException: CreateProcess: jad -p -t4 -lnc -lradix10 -radix10），如：C:\Java\jdk1.5.0\bin\jad.exe(放在此JDK路径下也可直接在path to decompiler设为”jad”相对路径)，在Directory for temporary files中指定临时文件的路径,如：C:\Documents and Settings\user\.net.sf.jadclipse
+
+⑦     此时打开任意*.class文件，可看到反编译后的源文件
+
+⑧     注意：当新建一工程后，在eclipse中以debug模式运行tomcat时，当运行至*.jar包反编译时常会出现”Source not found”的问题，必须在”Run”==>"Debug" ==>"Source" ==>"Add" ==>"Archive"加入反编译需要调用的jar包（工程中用到的jar包一般为$PROJECT_HOME/WEB-INF/lib下的jar包），这样进入时才会由jad反编译
+
+5． myeclipse插件（插件集成包，集成了AppServer/JSP/JSF/Spring/Hibernate/XML/EJB等
+
+插件）安装
+
+①下载地址：http://www.myeclipseide.com/ContentExpress-display-ceid-10.html
+
+呵呵，需要注册一个帐号才可以下载，而且myeclipse是收费的，不过网上注册码很多，顺便提供两个，有需要注册机的朋友可以联系我~~
+
+License Name : eclipse
+
+License Key : rLR8ZC-444-55-44678656900291869
+
+License Name : myeclipse
+
+License Key : zLR8ZC-444-55-4467865944410637
+
+②下载后一路next，我安装到D:\MyEclipse 5.0GA，可以看到MyEclipse目录结构如下：
+
+D:\MyEclipse 5.0GA\eclipse\features 
+
+D:\MyEclipse 5.0G\eclipse\plugins
+
+③注意：因为myeclipse自带了语言包，所以上面建的language文件夹会被覆盖~~
+
+安装后可在D:\eclipse\links下看到多出一个com.genuitec.eclipse.MyEclipse.link文件，其内容为：path=D:\\MyEclipse 5.0GA
+
+呵呵，和上面我们自定义的myplugins文件夹对比一下，它也是使用link方式安装插件的。
+
+④启动eclipse即可看到在”Window” ==>”Preferences”下多了MyEclipse选项。
+
+我们完全可以把D:\\MyEclipse 5.0GA整个目录copy到D:\eclipse下，修改com.genuitec.eclipse.MyEclipse.link为：
+
+path=D:\\eclipse\\MyEclipse 5.0GA
+
+6． eclipse中只有CVS，对于vss，需要安装插件，
+
+vssplugin下载地址为：http://sourceforge.net/projects/vssplugin/
+
+VSS Plugin 1.6.1 的版本虽然标注支持Support for Eclipse 3.1 RCx ，不过在eclipse3.2.1可以正常使用~~
+
+
+ 
+
+类别：Web | 浏览(1687) | 评论 (0)  上一篇：如何利用花生壳远程查看监控？<...    下一篇：微软.net精简框架最常见问题 FAQ 最近读者： 登录后，您就出现在这里。          
+    futuredreamer kfasd12 feinibukep 8zhaohua wangyudong2009 my_love684 李家大少1986 bigfirebird  
+ 网友评论：本篇日志被作者设置为禁止发表新评论
+      

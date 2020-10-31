@@ -1,0 +1,49 @@
+1：在终端下：mysql -V。 以下是代码片段：
+
+[shengting@login ~]$ mysql -V
+mysql Ver 14.7 Distrib 4.1.10a, for redhat-linux-gnu (i686)
+
+
+    2：在mysql中：mysql> status;
+
+以下是代码片段：
+
+mysql> status;
+--------------
+mysql Ver 14.7 Distrib 4.1.10a, for redhat-linux-gnu (i686)
+
+Connection id:          416
+SSL:                    Not in use
+Current pager:          stdout
+Using outfile:          ''
+Using delimiter:        ;
+Server version:         3.23.56-log
+Protocol version:       10
+Connection:             Localhost via UNIX socket
+Client characterset:    latin1
+Server characterset:    latin1
+UNIX socket:            /tmp/mysql_3311.sock
+Uptime:                 62 days 21 hours 21 min 57 sec
+
+Threads: 1 Questions: 584402560 Slow queries: 424 Opens: 59664208 Flush tables: 1 Open tables: 64 Queries per second avg: 107.551
+
+
+    3：在help里面查找
+
+以下是代码片段：
+
+[shengting@login ~]$ mysql --help | grep Distrib
+mysql Ver 14.7 Distrib 4.1.10a, for redhat-linux-gnu (i686)
+
+
+    4：使用mysql的函数
+
+以下是代码片段：
+
+mysql> select version();
++-------------+
+| version()   |
++-------------+
+| 3.23.56-log |
++-------------+
+1 row in set (0.00 sec)

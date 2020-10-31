@@ -1,0 +1,28 @@
+下载mysql源码
+wget http://cn2.php.net/distributions/php-5.6.22.tar.gz
+
+配置
+cmake . -DCMAKE_INSTALL_PREFIX=/home/docker/software/mysql -DMYSQL_DATADIR=/home/docker/software/mysql/data -DSYSCONFDIR=/etc -DWITH_INNOBASE_STORAGE_ENGINE=1 -DWITH_ARCHIVE_STORAGE_ENGINE=1 -DWITH_BLACKHOLE_STORAGE_ENGINE=1 -DWITH_PARTITION_STORAGE_ENGINE=1 -DWITH_PERFSCHEMA_STORAGE_ENGINE=1 -DWITHOUT_EXAMPLE_STORAGE_ENGINE=1 -DWITHOUT_FEDERATED_STORAGE_ENGINE=1 -DDEFAULT_CHARSET=utf8 -DDEFAULT_COLLATION=utf8_general_ci -DWITH_EXTRA_CHARSETS=all -DENABLED_LOCAL_INFILE=1 -DWITH_READLINE=1 -DMYSQL_UNIX_ADDR=/home/docker/software/mysql/mysql.sock -DMYSQL_TCP_PORT=6033 -DMYSQL_USER=mysql -DCOMPILATION_COMMENT="lq-edition" -DENABLE_DTRACE=0 -DOPTIMIZER_TRACE=1 -DWITH_DEBUG=1
+
+如果安装报错CMake Error at cmake/boost.cmake:81 (MESSAGE)，参看：https://blog.csdn.net/u012767761/article/details/78185768
+
+make
+sudo make install
+
+
+
+solar@123$321
+
+
+SET PASSWORD FOR 'root'@'localhost' = PASSWORD('zgjx@321');
+
+
+
+create user docker identified by 'zgjx@321';
+
+grant all on *.* to docker@"%" Identified by "zgjx@321";
+grant all on *.* to docker@"localhost" Identified by "zgjx@321";
+grant all on *.* to docker@"127.0.0.1" Identified by "zgjx@321";
+
+
+CREATE DATABASE `cdc` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;

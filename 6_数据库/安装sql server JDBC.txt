@@ -1,0 +1,236 @@
+二、安装JDBC
+
+执行ms_jdbc_setup.exe可执行文件，一切只需要点击下一步，至到出现finish按钮，完成安装。
+
+注：
+
+(1) ms_JDBC_setup默认安装路径为：c:\Program Files\Microsoft SQL Server 2000 Driver for JDBC
+
+(2)此版(Version 2.2.0022)本仅支持Microsoft SQL Server 2000 Driver for JDBC
+
+(3)安装目录\lib\下的三个jar文件即是我们要的JDBC驱动核心
+
+msbase.jar
+
+mssqlserver.jar
+
+msutil.jar
+
+
+三、将以上（3）中指的三个jar文件加入到环境变量中去
+
+classpath：
+
+d:\webserver\lib\msbase.jar;d:\webserver\lib\mssqlserver.jar;d:\webserver\lib\msutil.jar
+
+注：也可以省事的将以上三个文件拷贝至你的jvm机所在的JAVA_HOME\jre\lib\ext目录下，不过不建议这么做。
+
+对于web项目，可直接将以上三个jar包拷贝到WEB-INF下的lib文件夹下即可。
+
+
+四、测试
+
+jsp文件：
+
+<%@ page contentType="text/html;charset=gb2312"%>
+
+<%@ page import="java.sql.*"%>
+
+<html>
+
+<body>
+
+<%
+
+Class.forName("com.microsoft.jdbc.sqlserver.SQLServerDriver").newInstance();
+
+String url="jdbc:microsoft:sqlserver://localhost:1433;DatabaseName=haiguan";
+
+String user="sa";
+
+String password="";
+
+Connection conn= DriverManager.getConnection(url,user,password);
+
+Statement stmt=conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+
+String sql="select * from xt_user";
+
+ResultSet rs=stmt.executeQuery(sql);
+
+while(rs.next())
+
+{
+
+%>
+
+您的第一个字段内容为：<%=rs.getString(1)%>
+
+您的第二个字段内容为：<%=rs.getString(2)%>
+
+<%
+
+}
+
+%>
+
+<%out.print("数据库操作成功，恭喜你");%>
+
+<%
+
+rs.close();
+
+stmt.close();
+
+conn.close();
+
+%>
+
+</body>
+
+</html>
+
+
+五、注意事项
+
+1. 要保证你的Sql服务是启动状态
+
+2. 在Sql 的管理器中能够使用sa或其它用户正常登录；(有些人在安装sql时用了nt用户管理模式，这里可能会有一定问题)
+
+3. 第一次配置好环境变量最好能重启一下电脑
+
+4. 注意JVM和DataBase的启动顺序：先启动DataBase，再启动JVM机。
+
+注：在停止Web服务器后，再重启动，中间最好能有10秒以上的间隔。
+
+5. 注意操作系统的网络连通性
+
+A.启动了Tcp/IP服务
+
+B.配置了相关IP地址,有些人机器可能用的是自动分配IP或有配置IP时，但网络不通可能也找不到IP
+
+6. 有些机器在调试明最好能将（四）中的连接地址localhost改成数据库服务器的IP,这也是要注意5的原因。
+
+package zmsjdbc;
+import java.sql.*;
+public class sqlserver1
+{
+
+private   String url="jdbc:microsoft:sqlserver://localhost:1433;DatabaseName=thesisdb";
+
+//catv是数据库！loacalhost可以用IP和主机
+private   String user="sa";
+private   String pwd="";
+public   Connection getcon()
+{
+   Connection con;
+    try
+    { //加载驱动程序
+     Class.forName("com.microsoft.jdbc.sqlserver.SQLServerDriver").newInstance();
+      //创建连接
+      con=DriverManager.getConnection(url,user,pwd);
+      return con;
+     }
+     catch(ClassNotFoundException e)
+     {
+         System.out.println("加载驱动程序出错");
+     }
+     catch(SQLException e)
+     {
+       System.out.println(e.getMessage());
+     }
+     catch(Exception e)
+     {
+       System.out.println("出现了好大的错误");
+     }
+
+     return null;
+}
+
+public ResultSet executeSql(String sqlstr)
+{
+    Connection conn;
+    Statement stmt;
+
+     try
+     {
+       conn=getcon();
+       stmt=conn.createStatement();
+       ResultSet rs=stmt.executeQuery(sqlstr);
+
+       return rs;
+     }
+     catch(SQLException e)
+     {
+       System.out.print("获取数据集时出现错误");
+     }
+     return null;
+}
+
+public static void main(String[] args)
+{
+    ResultSet rs1;
+    sqlserver1 sql1=new sqlserver1();
+    rs1=sql1.executeSql("select ui_id,ui_name from userinfo");
+    try
+    {
+      while(rs1.next())
+      {
+        System.out.println(rs1.getString("ui_id")+" 姓名:"+rs1.getString("ui_name"));
+      }
+    }
+    catch(Exception e)
+    {
+       System.out.println(e.getMessage());
+    }
+   }
+}
+
+/*
+
+
+1、对于SQLSERVER 必须下载 SQLSERVER驱动
+
+http://download.microsoft.com/download/3/0/f/30ff65d3-a84b-4b8a-a570-27366b2271d8/setup.exe
+然后把 msbase.jar mssqlserver.jar msutil.jar 复制到 D:\JBuilder9\jdk1.4\jre\lib\ext，或者放在web项目的WEB-INF/lib下。
+
+2：如果出现错误：
+java.sql.SQLException: [Microsoft][SQLServer 2000 Driver for JDBC]Error establishing socket.
+
+说明 SQLERVER 端口号 不对   》》》更改端口号：SQLSERVER->属性-常规-网络配置-常规-TCP/IP-属性--更改端口号
+有个命令可以用： cmd-> netstat -a
+   例如：String url="jdbc:microsoft:sqlserver://localhost:1433;DatabaseName=zmstv";
+	 
+   说明你使用的是1433 在CMD 下 输入 netstat -a -n
+   应该看不到：TCP    127.0.0.1:1433         0.0.0.0:0              LISTENING
+
+如果安装 sqlserver 2000 出现 报错 "以前的某个程序安装已在安装计算机上创建挂起的文件操作。。。。"
+
+打开注册表编辑器，在HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager中找到PendingFileRenameOperations项目，并删除它。这样就可以清除安装暂挂项目。
+
+*/
+ 
+ 
+
+类别：默认分类 | 添加到搜藏 | 浏览(26) | 评论 (0)  上一篇：java的参数传递机制    下一篇：Java字符串 相关文章：? jsp连接MySQL出现错误的解决方法...　　　　　　　　　 ? Oracle JDBC驱动介绍 
+? 使用自定义MySQL驱动"补丁",解决...　　　　　　　　　 ? 通过动态代理修改JDBC驱动,暂解M... 
+? JDBC驱动的加载和注册及statemen...　　　　　　　　　 ? SQL Server 2000 JDBC驱动的完整... 
+? JDBC的四种驱动类型...　　　　　　　　　 ? DB2的JDBC连接驱动总结(续) 
+? 怎么安装MYSQL5.0的JDBC驱动　　　　　　　　　 ? jsp通过JDBC驱动(第四种类型)访... 
+更多>> 
+ 最近读者： 登录后，您就出现在这里。   
+    lovefang_0311  
+ 网友评论：     发表评论：姓　名：     注册 | 登录 *姓名最长为50字节 
+   
+网址或邮箱：  (选填) 
+   
+内　容： 插入表情  ▼ 闪光字 
+ 
+ 
+  
+   
+验证码：   请点击后输入四位验证码，字母不区分大小写
+看不清?  
+      取消回复 
+
+      
