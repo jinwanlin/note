@@ -1,0 +1,39 @@
+Synopsys的EDA软件需要开机启动license，每次需要手动启动，很麻烦，所以添加开机启动脚本lm.sh
+
+    新建脚本文件lm.sh
+
+#!/bin/sh
+/home/eda/.tools/scl/linux64/bin/lmgrd -c /home/eda/.tools/license/Synopsys.dat -l /home/eda/.lm.log
+
+    1
+    2
+
+    设置权限
+
+sudo chmod 755 lm.sh
+
+    1
+
+    将其拷贝到启动目录下
+
+sudo mv lm.sh /etc/init.d/
+
+    1
+
+    将脚本添加到启动脚本
+        这里90表明一个优先级，越高表示执行的越晚
+
+cd /etc/init.d/
+sudo update-rc.d lm.sh defaults 90
+
+    1
+    2
+
+    移除Ubuntu开机脚本
+
+sudo update-rc.d -f lm.sh remove
+--------------------- 
+作者：254丶小小黑 
+来源：CSDN 
+原文：https://blog.csdn.net/immeatea_aun/article/details/81749665 
+版权声明：本文为博主原创文章，转载请附上博文链接！

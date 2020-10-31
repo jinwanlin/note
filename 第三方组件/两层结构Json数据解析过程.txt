@@ -1,0 +1,21 @@
+[{"total": 2,"items": [{"id": 2,"remark": "aaa","authorName": "aaas"},{"id": 1,"remark": "武侠1","authorName": "金庸"}]}]
+
+
+//json数据
+[{"name":"coolxing", "age"=24, "male":true, "address":{"street":"huiLongGuan", "city":"beijing", "country":"china"}}, {"name":"min", "age"=20, "male":false,"address":{"street":"heiShiJiao", "city":"daLian", "country":"china"}}] 
+//解析代码
+List<Person> persons = new ArrayList<Person>();
+JSONArray jsonArray = new JSONArray(json);
+for(int i = 0; i < jsonArray.length(); i++) {
+	JSONObject jsonObject = jsonArray.getJSONObject(i);
+	String name = jsonObject.getString("name");
+	int age = jsonObject.getInt("age");
+	boolean male = jsonObject.getBoolean("male");
+	JSONObject addressJSON = jsonObject.getJSONObject("address");
+	String street = addressJSON.getString("street");
+	String city = addressJSON.getString("city");
+	String country = addressJSON.getString("country");
+	Address address = new Address(street, city, country);
+	Person person = new Person(name, age, male, address);
+	persons.add(person);
+}

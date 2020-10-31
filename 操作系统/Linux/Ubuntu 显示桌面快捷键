@@ -1,0 +1,8 @@
+CTRL＋ALT＋D
+
+若想更改成windows的习惯 如下操作：
+
+首先打开终端输入：
+　　gconf-editor
+到“Apps->Metacity->Global keybingdings" 出找 “show desktop”编辑值为<Super>d
+即可。
